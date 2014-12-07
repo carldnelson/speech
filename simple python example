@@ -1,0 +1,28 @@
+import os
+import platform 
+from time import gmtime, strftime, localtime
+
+os_info = platform.system()
+
+def text2speech(foo):
+    if os_info == 'Darwin':
+        os.system('say '+foo)
+    elif os_info == 'Linux':
+        os.system('espeak -v en '+foo)
+    else :
+        import win32com.client
+        speech = win32com.client.Dispatch('Sapi.SpVoice')
+        speech.Speak(foo)
+
+print "***Talking Python***\n"
+print "Enter anything & it will say back to you ! \nEnter 'time', it will read current time\n"
+print "Enter stop to exit\n\n"
+while True :
+    foo=raw_input('Enter something: ') #anything you want to hear !
+    if foo.lower() == 'stop':
+        text2speech('"Happy Learning Python. Bye Bye"')
+        break
+    elif foo.lower() == 'time':
+        foo = strftime("%a, %d %b %Y %H:%M", localtime())
+    string = '"'+foo+'"'
+    text2speech(string)
